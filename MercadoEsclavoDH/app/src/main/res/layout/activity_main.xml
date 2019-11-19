@@ -4,11 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MainActivity"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/mainActivity_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/colorPrimary"
+            app:titleTextColor="#FFF"/>
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/mainActivity_materialSearchView_searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/mainActivity_frameLayout_fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
