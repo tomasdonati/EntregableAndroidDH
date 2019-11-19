@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,13 +57,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         private ImageView productThumbnail;
         private TextView productName;
-
+        private ProgressBar thumbnailProgressBar;
 
         public ProductListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             productThumbnail = itemView.findViewById(R.id.productListCell_imageView_productThumbnail);
             productName = itemView.findViewById(R.id.productListCell_textView_productName);
+            thumbnailProgressBar = itemView.findViewById(R.id.productListCell_progressBar);
 
 
 
@@ -77,11 +79,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            thumbnailProgressBar.setVisibility(View.GONE);
                             return false;
                         }
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            thumbnailProgressBar.setVisibility(View.GONE);
                             return false;
                         }
                     })
