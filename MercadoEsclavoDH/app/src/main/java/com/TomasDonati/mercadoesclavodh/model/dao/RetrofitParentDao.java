@@ -1,4 +1,6 @@
-package com.TomasDonati.mercadoesclavodh.model;
+package com.TomasDonati.mercadoesclavodh.model.dao;
+
+import com.TomasDonati.mercadoesclavodh.model.service.ProductService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

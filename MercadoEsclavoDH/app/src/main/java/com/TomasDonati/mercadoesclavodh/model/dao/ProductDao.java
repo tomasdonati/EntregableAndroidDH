@@ -1,5 +1,7 @@
-package com.TomasDonati.mercadoesclavodh.model;
+package com.TomasDonati.mercadoesclavodh.model.dao;
 
+import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.model.poho.ProductContainer;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 
 import java.util.List;

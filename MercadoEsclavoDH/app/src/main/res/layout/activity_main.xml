@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity"
+    tools:context=".view.Activities.MainActivity"
     android:orientation="vertical"
     android:background="#1f1f1f">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/mainActivity_toolbar"
             android:layout_width="match_parent"
@@ -25,9 +26,20 @@
 
     </FrameLayout>
 
-    <FrameLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
         android:id="@+id/mainActivity_frameLayout_fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/mainActivity_navigationView"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>

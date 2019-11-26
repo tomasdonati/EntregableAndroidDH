@@ -1,4 +1,4 @@
-package com.TomasDonati.mercadoesclavodh.view;
+package com.TomasDonati.mercadoesclavodh.view.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,18 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.TomasDonati.mercadoesclavodh.R;
-import com.TomasDonati.mercadoesclavodh.controller.ProductController;
-import com.TomasDonati.mercadoesclavodh.model.Product;
-import com.TomasDonati.mercadoesclavodh.model.ProductContainer;
-import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
+import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.view.Fragments.HomeFragment;
+import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductDetailFragment;
+import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductListFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ProductListFragment.FragmentListener {
 
     private ProductListFragment productListFragment;
     private Toolbar toolbar;
@@ -33,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         viewFinder();
         setSupportActionBar(toolbar);
         setSearchView();
+
+        pasteFragment(new HomeFragment());
 
     }
 
@@ -80,8 +79,17 @@ public class MainActivity extends AppCompatActivity {
     private void pasteFragment(Fragment fragment){
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.mainActivity_frameLayout_fragmentContainer, fragment, null)
+                .add(R.id.mainActivity_frameLayout_fragmentContainer, fragment, null)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void recieveProduct(Product product) {
+        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ProductDetailFragment.PRODUCT_DETAIL_KEY, product);
+        productDetailFragment.setArguments(bundle);
+        pasteFragment(productDetailFragment);
     }
 }

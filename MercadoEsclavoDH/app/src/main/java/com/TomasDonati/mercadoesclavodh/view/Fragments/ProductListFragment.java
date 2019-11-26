@@ -1,8 +1,10 @@
-package com.TomasDonati.mercadoesclavodh.view;
+package com.TomasDonati.mercadoesclavodh.view.Fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,8 +15,9 @@ import android.view.ViewGroup;
 
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.ProductController;
-import com.TomasDonati.mercadoesclavodh.model.Product;
+import com.TomasDonati.mercadoesclavodh.model.poho.Product;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
+import com.TomasDonati.mercadoesclavodh.view.Adapters.ProductListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,9 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductListFragment extends Fragment {
+public class ProductListFragment extends Fragment implements ProductListAdapter.ProductListAdapterListener {
+
+    private FragmentListener fragmentListener;
 
     private RecyclerView productListRecyclerView;
     private ProductListAdapter productListAdapter;
@@ -42,7 +47,7 @@ public class ProductListFragment extends Fragment {
         productListRecyclerView = view.findViewById(R.id.productListFragment_recyclerView_productList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        productListAdapter = new ProductListAdapter(new ArrayList<Product>());
+        productListAdapter = new ProductListAdapter(new ArrayList<Product>(), this);
 
         productListRecyclerView.setLayoutManager(linearLayoutManager);
         productListRecyclerView.setAdapter(productListAdapter);
@@ -63,4 +68,20 @@ public class ProductListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        fragmentListener = (FragmentListener) context;
+
+    }
+
+    @Override
+    public void listenToProduct(Product product) {
+        fragmentListener.recieveProduct(product);
+    }
+
+    public interface FragmentListener {
+        public void recieveProduct(Product productList);
+    }
 }

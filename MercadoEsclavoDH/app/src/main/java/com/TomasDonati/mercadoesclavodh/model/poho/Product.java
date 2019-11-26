@@ -1,8 +1,10 @@
-package com.TomasDonati.mercadoesclavodh.model;
+package com.TomasDonati.mercadoesclavodh.model.poho;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
 
     public static final String IMAGE_URL = "http://mla-s2-p.mlstatic.com/";
 
@@ -12,9 +14,15 @@ public class Product {
     private String productThumbnail;
     @SerializedName("condition")
     private String productCondition;
+    @SerializedName("price")
+    private String productPrice;
 
     public String getProductCondition() {
         return productCondition;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
     }
 
     public String getProductName() {

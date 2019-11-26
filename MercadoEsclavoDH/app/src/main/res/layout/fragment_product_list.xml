@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ProductListFragment"
+    tools:context=".view.Fragments.ProductListFragment"
     android:orientation="vertical"
     android:background="#1f1f1f">
 

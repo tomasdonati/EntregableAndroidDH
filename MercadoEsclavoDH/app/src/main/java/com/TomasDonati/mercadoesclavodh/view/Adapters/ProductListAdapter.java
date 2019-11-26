@@ -1,4 +1,4 @@
-package com.TomasDonati.mercadoesclavodh.view;
+package com.TomasDonati.mercadoesclavodh.view.Adapters;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.TomasDonati.mercadoesclavodh.R;
-import com.TomasDonati.mercadoesclavodh.model.Product;
+import com.TomasDonati.mercadoesclavodh.model.poho.Product;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -25,9 +25,16 @@ import java.util.List;
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
 
     private List<Product> productList;
+    private ProductListAdapterListener productListAdapterListener;
 
     public ProductListAdapter(List<Product> productList) {
         this.productList = productList;
+        this.productListAdapterListener = productListAdapterListener;
+    }
+
+    public ProductListAdapter(List<Product> productList, ProductListAdapterListener productListAdapterListener){
+        this.productList = productList;
+        this.productListAdapterListener = productListAdapterListener;
     }
 
     @NonNull
@@ -66,7 +73,13 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             productName = itemView.findViewById(R.id.productListCell_textView_productName);
             thumbnailProgressBar = itemView.findViewById(R.id.productListCell_progressBar);
 
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Product clickedProduct = productList.get(getAdapterPosition());
+                    productListAdapterListener.listenToProduct(clickedProduct);
+                }
+            });
 
         }
 
@@ -97,6 +110,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void setProductList(List<Product> productList){
         this.productList = productList;
         notifyDataSetChanged();
+    }
+
+    public interface ProductListAdapterListener {
+        public void listenToProduct(Product product);
     }
 
 }
