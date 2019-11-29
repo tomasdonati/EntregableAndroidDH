@@ -14,12 +14,13 @@
         <ProgressBar
             android:id="@+id/productDetailFragment_progressBar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"  />
 
         <ImageView
             android:id="@+id/productDetailFragment_imageView_productImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
 
     </FrameLayout>
 
@@ -27,7 +28,7 @@
         android:id="@+id/productDetailFragment_textView_productName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
+        android:layout_marginVertical="20dp"
         android:textColor="#FFFF"
         android:textSize="20sp"
         tools:text="Product Name" />
@@ -37,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFF"
+        android:fontFamily="sans-serif-black"
         android:textSize="30sp"
         tools:text="Product Price" />
 

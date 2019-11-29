@@ -39,7 +39,8 @@
             android:id="@+id/mainActivity_navigationView"
             android:layout_gravity="start"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:menu="@menu/menu_navigation_view"/>
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </LinearLayout>
