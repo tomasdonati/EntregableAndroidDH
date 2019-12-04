@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="#1f1f1f"
-    android:elevation="30dp"
+    app:cardBackgroundColor="@color/alabaster"
+    android:elevation="40dp"
     app:cardCornerRadius="3dp"
     android:layout_margin="2dp">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FFFF">
+        android:background="@color/alabaster">
 
         <FrameLayout
             android:layout_width="90dp"

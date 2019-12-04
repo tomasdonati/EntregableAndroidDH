@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.ProductController;
-import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 import com.TomasDonati.mercadoesclavodh.view.Adapters.ProductListAdapter;
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="wildPastelBlue">#95B4CC</color>
+    <color name="darkPastelBlue">#799FCB</color>
+    <color name="pastelRedLight">#FEC9C9</color>
+    <color name="alabaster">#EEF1E6</color>
 </resources>

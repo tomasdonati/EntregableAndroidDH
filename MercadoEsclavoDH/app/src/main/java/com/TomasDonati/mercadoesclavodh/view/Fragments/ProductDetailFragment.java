@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.TomasDonati.mercadoesclavodh.R;
-import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;

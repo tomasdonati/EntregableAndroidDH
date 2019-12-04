@@ -1,6 +1,6 @@
 package com.TomasDonati.mercadoesclavodh.controller;
 
-import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.model.dao.ProductDao;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 

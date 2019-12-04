@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".view.Fragments.ProductListFragment"
     android:orientation="vertical"
-    android:background="#1f1f1f">
+    android:background="@color/alabaster">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/productListFragment_recyclerView_productList"

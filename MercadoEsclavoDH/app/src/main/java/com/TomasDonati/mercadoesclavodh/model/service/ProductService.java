@@ -1,6 +1,6 @@
 package com.TomasDonati.mercadoesclavodh.model.service;
 
-import com.TomasDonati.mercadoesclavodh.model.poho.ProductContainer;
+import com.TomasDonati.mercadoesclavodh.model.pojo.ProductContainer;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

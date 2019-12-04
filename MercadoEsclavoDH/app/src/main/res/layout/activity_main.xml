@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.Activities.MainActivity"
     android:orientation="vertical"
-    android:background="#FFFF">
+    android:background="@color/alabaster">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,13 +16,14 @@
             android:id="@+id/mainActivity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/colorPrimary"
-            app:titleTextColor="#FFF"/>
+            android:background="@color/darkPastelBlue"
+            app:titleTextColor="@color/alabaster"/>
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/mainActivity_materialSearchView_searchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/MaterialSearchViewStyle"/>
 
     </FrameLayout>
 

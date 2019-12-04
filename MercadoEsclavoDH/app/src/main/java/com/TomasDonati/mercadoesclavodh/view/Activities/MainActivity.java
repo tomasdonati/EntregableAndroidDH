@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.TomasDonati.mercadoesclavodh.R;
-import com.TomasDonati.mercadoesclavodh.model.poho.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.HomeFragment;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductDetailFragment;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductListFragment;
@@ -69,6 +69,15 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
             }
         });
         searchView.setVoiceSearch(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private void viewFinder(){

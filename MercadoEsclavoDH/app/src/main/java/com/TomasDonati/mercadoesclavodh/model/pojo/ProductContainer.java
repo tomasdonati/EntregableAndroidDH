@@ -1,6 +1,5 @@
-package com.TomasDonati.mercadoesclavodh.model.poho;
+package com.TomasDonati.mercadoesclavodh.model.pojo;
 
-import com.TomasDonati.mercadoesclavodh.model.poho.Product;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

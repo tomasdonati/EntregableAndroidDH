@@ -1,4 +1,4 @@
-package com.TomasDonati.mercadoesclavodh.model.poho;
+package com.TomasDonati.mercadoesclavodh.model.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
