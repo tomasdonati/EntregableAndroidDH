@@ -71,7 +71,6 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         fragmentListener = (FragmentListener) context;
 
     }

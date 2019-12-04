@@ -102,8 +102,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                             return false;
                         }
                     })
-                    .into(productThumbnail)
-            ;
+                    .into(productThumbnail);
         }
     }
 
