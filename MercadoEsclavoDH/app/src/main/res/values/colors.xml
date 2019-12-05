@@ -2,6 +2,6 @@
 <resources>
     <color name="wildPastelBlue">#95B4CC</color>
     <color name="darkPastelBlue">#799FCB</color>
-    <color name="pastelRedLight">#FEC9C9</color>
+    <color name="lightPink">#FFC0CB</color>
     <color name="alabaster">#EEF1E6</color>
 </resources>

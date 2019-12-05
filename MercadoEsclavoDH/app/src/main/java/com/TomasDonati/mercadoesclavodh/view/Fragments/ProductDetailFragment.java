@@ -1,6 +1,7 @@
 package com.TomasDonati.mercadoesclavodh.view.Fragments;
 
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
+import com.TomasDonati.mercadoesclavodh.view.Activities.LoginActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -33,6 +36,7 @@ public class ProductDetailFragment extends Fragment {
     private TextView productPrice;
     private ImageView productImage;
     private ProgressBar productImageProgressBar;
+    private ToggleButton favouriteButton;
 
 
     public ProductDetailFragment() {
@@ -69,6 +73,14 @@ public class ProductDetailFragment extends Fragment {
         })
                 .into(productImage);
 
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
 
@@ -79,6 +91,7 @@ public class ProductDetailFragment extends Fragment {
         productPrice = view.findViewById(R.id.productDetailFragment_textView_productPrice);
         productImage = view.findViewById(R.id.productDetailFragment_imageView_productImage);
         productImageProgressBar = view.findViewById(R.id.productDetailFragment_progressBar);
+        favouriteButton = view.findViewById(R.id.productDetailFragment_toggleButton_favouriteButton);
 
     }
 
