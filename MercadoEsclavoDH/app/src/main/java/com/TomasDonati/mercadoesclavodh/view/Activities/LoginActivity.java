@@ -125,4 +125,10 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.loginActivity_button_registerButton);
 
     }
+
+    private void updateUi(FirebaseUser currentUser){
+        if(currentUser != null){
+
+        }
+    }
 }

@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.ProductController;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Description;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.model.pojo.ProductContainer;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
@@ -36,6 +37,7 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
     private ProductListAdapter productListAdapter;
     private ProductController productController = new ProductController();
     private List<Product> productList = new ArrayList<>();
+    private List<Description> descriptionList = new ArrayList<>();
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -100,6 +102,19 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
                 productList = result;
             }
         });
+
+        //esto seguro vuele
+        String productId;
+        for (Product product:productList) {
+
+            productId = product.getProductId();
+            productController.bringProductDescription(productId, new ResultListener<Description>() {
+                @Override
+                public void finish(Description result) {
+                    descriptionList.add(result);
+                }
+            });
+        }
     }
 
     @Override

@@ -16,6 +16,18 @@ public class ProductContainer {
         this.productList = productList;
     }
 
+    public Boolean containsProduct(Product product){
+        return productList.contains(product);
+    }
+
+    public void addProduct(Product product){
+        productList.add(product);
+    }
+
+    public void removeProduct(Product product){
+        productList.remove(product);
+    }
+
     public List<Product> getProductList() {
         return productList;
     }

@@ -28,6 +28,7 @@
     </FrameLayout>
 
     <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/mainActivity_drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
