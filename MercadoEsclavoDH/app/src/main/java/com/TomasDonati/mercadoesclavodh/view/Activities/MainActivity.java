@@ -9,11 +9,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.TomasDonati.mercadoesclavodh.R;
+import com.TomasDonati.mercadoesclavodh.controller.ProductController;
+import com.TomasDonati.mercadoesclavodh.model.pojo.Description;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
+import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.HomeFragment;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductDetailFragment;
 import com.TomasDonati.mercadoesclavodh.view.Fragments.ProductListFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ProductListFragment.FragmentListener {
 
@@ -31,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
         setSupportActionBar(toolbar);
         setSearchView();
 
-        pasteFragment(new HomeFragment());
-
+        replaceFragment(new HomeFragment());
     }
 
 
@@ -68,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
                 return false;
             }
         });
-        searchView.setVoiceSearch(true);
     }
 
     @Override
@@ -90,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
                 .beginTransaction()
                 .add(R.id.mainActivity_frameLayout_fragmentContainer, fragment, null)
                 .addToBackStack(null)
+                .commit();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainActivity_frameLayout_fragmentContainer, fragment, null)
                 .commit();
     }
 

@@ -9,13 +9,15 @@
     app:cardCornerRadius="3dp"
     android:layout_margin="2dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/alabaster">
 
         <FrameLayout
+            android:id="@+id/productListCell_frameLayout_imageLayout"
+            android:layout_alignParentLeft="true"
             android:layout_width="80dp"
             android:layout_height="80dp">
 
@@ -36,11 +38,35 @@
             android:id="@+id/productListCell_textView_productName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/productListCell_textView_productCondition"
+            android:layout_marginStart="5dp"
             android:textColor="#1f1f1f"
-            android:textSize="13sp"
+            android:textSize="12sp"
             tools:text="Product"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/productListCell_textView_productCondition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_toRightOf="@+id/productListCell_frameLayout_imageLayout"
+            android:textColor="@color/darkPastelBlue"
+            android:textSize="12sp"
+            tools:text="Condition"/>
+
+        <TextView
+            android:id="@+id/productListCell_textView_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/productListCell_frameLayout_imageLayout"
+            android:layout_below="@+id/productListCell_textView_productName"
+            android:layout_marginStart="15dp"
+            android:textColor="@color/darkPastelBlue"
+            android:textSize="20sp"
+            tools:text="Price"/>
+
+
+
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

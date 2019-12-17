@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.9"
             android:layout_marginVertical="20dp"
-            android:textColor="#FFFF"
+            android:textColor="@color/alabaster"
             android:textSize="20sp"
             tools:text="Product Name" />
         <ToggleButton
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:textColor="#FFFF"
+        android:textColor="@color/alabaster"
         android:textSize="30sp"
         tools:text="Product Price" />
 

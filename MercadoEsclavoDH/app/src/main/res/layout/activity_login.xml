@@ -29,6 +29,7 @@
         android:id="@+id/loginActivity_editText_loginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPassword"
         android:hint="Contraseña"/>
 
     <Button
@@ -42,10 +43,34 @@
         android:elevation="40dp"/>
 
     <TextView
-        android:id="@+id/loginActivity_textView_clickableRegisterTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Todavia no tiene una cuenta? Registrese aqui"/>
+        android:layout_marginBottom="30dp"
+        android:text="Todavia no tiene una cuenta? Registrese abajo"/>
+
+
+    <EditText
+        android:id="@+id/loginActivity_editText_registerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nuevo email"/>
+
+    <EditText
+        android:id="@+id/loginActivity_editText_registerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Nueva Contraseña"/>
+
+    <Button
+        android:id="@+id/loginActivity_button_registerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/darkPastelBlue"
+        android:text="Registrarse"
+        android:elevation="40dp"/>
 
 
 

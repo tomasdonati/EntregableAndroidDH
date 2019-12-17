@@ -9,6 +9,9 @@ public class ProductContainer {
     @SerializedName("results")
     private List<Product> productList;
 
+    public ProductContainer() {
+    }
+
     public ProductContainer(List<Product> productList){
         this.productList = productList;
     }

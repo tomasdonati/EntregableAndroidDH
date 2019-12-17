@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,10 +17,12 @@ import android.view.ViewGroup;
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.ProductController;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.ProductContainer;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 import com.TomasDonati.mercadoesclavodh.view.Adapters.ProductListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,6 +35,7 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
     private RecyclerView productListRecyclerView;
     private ProductListAdapter productListAdapter;
     private ProductController productController = new ProductController();
+    private List<Product> productList = new ArrayList<>();
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -52,8 +56,37 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
         productListRecyclerView.setLayoutManager(linearLayoutManager);
         productListRecyclerView.setAdapter(productListAdapter);
 
+        //le asigno la callback al recycler
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(productListRecyclerView);
+
         return view;
     }
+
+
+
+
+
+
+
+    //creo la callback para hacer el drag n drop...
+    private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+
+            Collections.swap(productList, fromPosition, toPosition);
+
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
 
     //metodo para que se ejecute el pediddo del controller
     public void searchForProduct(String query){
@@ -64,6 +97,7 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
             @Override
             public void finish(List<Product> result) {
                 productListAdapter.setProductList(result);
+                productList = result;
             }
         });
     }

@@ -8,6 +8,8 @@ public class Product implements Serializable {
 
     public static final String IMAGE_URL = "http://mla-s2-p.mlstatic.com/";
 
+    @SerializedName("id")
+    private String productId;
     @SerializedName("title")
     private String productName;
     @SerializedName("thumbnail")
@@ -16,6 +18,10 @@ public class Product implements Serializable {
     private String productCondition;
     @SerializedName("price")
     private String productPrice;
+
+    public String getProductId() {
+        return productId;
+    }
 
     public String getProductCondition() {
         return productCondition;

@@ -29,7 +29,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     public ProductListAdapter(List<Product> productList) {
         this.productList = productList;
-        this.productListAdapterListener = productListAdapterListener;
     }
 
     public ProductListAdapter(List<Product> productList, ProductListAdapterListener productListAdapterListener){
@@ -64,6 +63,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         private ImageView productThumbnail;
         private TextView productName;
+        private TextView productCondition;
+        private TextView productPrice;
         private ProgressBar thumbnailProgressBar;
 
         public ProductListViewHolder(@NonNull View itemView) {
@@ -71,7 +72,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
             productThumbnail = itemView.findViewById(R.id.productListCell_imageView_productThumbnail);
             productName = itemView.findViewById(R.id.productListCell_textView_productName);
+            productPrice = itemView.findViewById(R.id.productListCell_textView_productPrice);
             thumbnailProgressBar = itemView.findViewById(R.id.productListCell_progressBar);
+            productCondition = itemView.findViewById(R.id.productListCell_textView_productCondition);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,6 +89,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public void bindProduct(Product product){
 
             productName.setText(product.getProductName());
+            productCondition.setText("(" + translateCondition(product) + ")");
+            productPrice.setText("$" + product.getProductPrice());
 
             Glide.with(productThumbnail.getContext())
                     .load(product.getProductThumbnail())
@@ -104,6 +109,16 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                     })
                     .into(productThumbnail);
         }
+    }
+
+    private String translateCondition(Product product){
+        String productCondition;
+        if(product.getProductCondition().equals("new")){
+            productCondition = "nuevo";
+        } else{
+            productCondition = "usado";
+        }
+        return productCondition;
     }
 
     public void setProductList(List<Product> productList){

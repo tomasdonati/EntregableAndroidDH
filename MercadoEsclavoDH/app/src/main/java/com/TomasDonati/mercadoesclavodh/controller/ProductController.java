@@ -1,5 +1,6 @@
 package com.TomasDonati.mercadoesclavodh.controller;
 
+import com.TomasDonati.mercadoesclavodh.model.pojo.Description;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.model.dao.ProductDao;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
@@ -13,6 +14,16 @@ public class ProductController {
         productDao.searchProductByText(query, new ResultListener<List<Product>>() {
             @Override
             public void finish(List<Product> result) {
+                viewListener.finish(result);
+            }
+        });
+    }
+
+    public void bringProductDescription(String productId, final ResultListener<Description> viewListener){
+        ProductDao productDao = new ProductDao();
+        productDao.bringProductDescription(productId, new ResultListener<Description>() {
+            @Override
+            public void finish(Description result) {
                 viewListener.finish(result);
             }
         });

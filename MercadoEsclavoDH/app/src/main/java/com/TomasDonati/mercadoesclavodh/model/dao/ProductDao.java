@@ -1,5 +1,8 @@
 package com.TomasDonati.mercadoesclavodh.model.dao;
 
+import android.util.Log;
+
+import com.TomasDonati.mercadoesclavodh.model.pojo.Description;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
 import com.TomasDonati.mercadoesclavodh.model.pojo.ProductContainer;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
@@ -35,6 +38,24 @@ public class ProductDao extends RetrofitParentDao {
             }
         });
 
+    }
+
+    public void bringProductDescription(String productId, final ResultListener<Description> controllerListener){
+        Call<List<Description>> call = productService.bringProductDesription(productId);
+
+        call.enqueue(new Callback<List<Description>>() {
+            @Override
+            public void onResponse(Call<List<Description>> call, Response<List<Description>> response) {
+                Description productDescription = response.body().get(0);
+                controllerListener.finish(productDescription);
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Description>> call, Throwable t) {
+                Log.d("ddd","dd");
+            }
+        });
     }
 
 
