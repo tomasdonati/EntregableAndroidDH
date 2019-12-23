@@ -126,6 +126,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         notifyDataSetChanged();
     }
 
+    public void addProductList(List<Product> results){
+        this.productList.addAll(results);
+        notifyDataSetChanged();
+    }
+
     public interface ProductListAdapterListener {
         public void listenToProduct(Product product);
     }

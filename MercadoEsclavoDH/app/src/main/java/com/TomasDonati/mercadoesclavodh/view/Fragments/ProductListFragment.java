@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.ProductController;
@@ -33,11 +34,18 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
 
     private FragmentListener fragmentListener;
 
+    private String searchQuery;
+
     private RecyclerView productListRecyclerView;
     private ProductListAdapter productListAdapter;
     private ProductController productController = new ProductController();
+
     private List<Product> productList = new ArrayList<>();
     private List<Description> descriptionList = new ArrayList<>();
+
+    private LinearLayoutManager linearLayoutManager;
+
+    private Boolean firstSearch = false;
 
     public ProductListFragment() {
         // Required empty public constructor
@@ -52,11 +60,26 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
 
         productListRecyclerView = view.findViewById(R.id.productListFragment_recyclerView_productList);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         productListAdapter = new ProductListAdapter(new ArrayList<Product>(), this);
 
         productListRecyclerView.setLayoutManager(linearLayoutManager);
         productListRecyclerView.setAdapter(productListAdapter);
+
+        productListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                Integer currentPosition = linearLayoutManager.findLastVisibleItemPosition();
+                Integer lastCell = linearLayoutManager.getItemCount();
+
+                if(currentPosition.equals(lastCell)){
+                    Toast.makeText(getContext(), "nuevapagina", Toast.LENGTH_SHORT).show();
+                    loadNewPage();
+                }
+            }
+        });
 
         //le asigno la callback al recycler
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -66,11 +89,19 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
     }
 
 
+    private void loadNewPage(){
+        if(!firstSearch) {
+            if (productController.getAreThereMoreProducts()) {
+                productController.searchProductByTextInPages(searchQuery,  new ResultListener<ProductContainer>() {
+                    @Override
+                    public void finish(ProductContainer result) {
+                        productListAdapter.addProductList(result.getProductList());
+                    }
+                });
+            }
+        }
 
-
-
-
-
+    }
     //creo la callback para hacer el drag n drop...
     private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
@@ -90,7 +121,7 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
         }
     };
 
-    //metodo para que se ejecute el pediddo del controller
+    //metodo para que se ejecute el pedido del controller
     public void searchForProduct(String query){
         if(query.length() < 3){
             return;
@@ -102,19 +133,6 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
                 productList = result;
             }
         });
-
-        //esto seguro vuele
-        String productId;
-        for (Product product:productList) {
-
-            productId = product.getProductId();
-            productController.bringProductDescription(productId, new ResultListener<Description>() {
-                @Override
-                public void finish(Description result) {
-                    descriptionList.add(result);
-                }
-            });
-        }
     }
 
     @Override

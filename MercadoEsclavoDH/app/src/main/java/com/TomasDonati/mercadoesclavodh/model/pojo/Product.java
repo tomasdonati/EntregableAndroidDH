@@ -18,8 +18,9 @@ public class Product implements Serializable {
     private String productCondition;
     @SerializedName("price")
     private String productPrice;
-    @SerializedName("seller_address")
-    private SellerAddress sellerAddress;
+
+    public Product() {
+    }
 
     public String getProductId() {
         return productId;

@@ -22,6 +22,23 @@ public class ProductDao extends RetrofitParentDao {
         super(BASE_URL);
     }
 
+    public void searchProductByTextInPages(String query, Integer offset, Integer limit, final ResultListener<ProductContainer> controllerListener){
+        Call<ProductContainer> call = productService.searchProductByTextInPages(query, offset, limit);
+
+        call.enqueue(new Callback<ProductContainer>() {
+            @Override
+            public void onResponse(Call<ProductContainer> call, Response<ProductContainer> response) {
+                ProductContainer productContainer = response.body();
+                controllerListener.finish(productContainer);
+            }
+
+            @Override
+            public void onFailure(Call<ProductContainer> call, Throwable t) {
+                Log.d("tag", "error");
+            }
+        });
+    }
+
     public void searchProductByText(String query, final ResultListener<List<Product>> controllerListener){
         Call<ProductContainer> call = productService.searchProductByText(query);
 
@@ -34,10 +51,9 @@ public class ProductDao extends RetrofitParentDao {
 
             @Override
             public void onFailure(Call<ProductContainer> call, Throwable t) {
-
+                Log.d("tag", "error");
             }
         });
-
     }
 
     public void bringProductDescription(String productId, final ResultListener<Description> controllerListener){
@@ -54,6 +70,23 @@ public class ProductDao extends RetrofitParentDao {
             @Override
             public void onFailure(Call<List<Description>> call, Throwable t) {
                 Log.d("ddd","dd");
+            }
+        });
+    }
+
+    public void bringProductById(String productId, final ResultListener<Product> controllerListener){
+        Call<Product> call = productService.bringProductById(productId);
+
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                Product product = response.body();
+                controllerListener.finish(product);
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+
             }
         });
     }

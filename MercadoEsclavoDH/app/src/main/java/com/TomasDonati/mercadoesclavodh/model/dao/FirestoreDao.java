@@ -30,19 +30,26 @@ public class FirestoreDao {
     }
 
     public void addProductToFav(Product product){
+        if(currentUser == null){
+            return;
+        }
         if(productContainer.containsProduct(product)){
             productContainer.removeProduct(product);
         } else{
             productContainer.addProduct(product);
         }
         firebaseFirestore.collection(FAVOURITE_PRODUCT)
-                .document(currentUser.getUid())
+                .document(currentUser.getEmail())
                 .set(productContainer);
     }
 
     private void bringFavouriteProducts(){
+        if(currentUser == null){
+            productContainer = new ProductContainer();
+            return;
+        }
         firebaseFirestore.collection(FAVOURITE_PRODUCT)
-                .document(currentUser.getUid())
+                .document(currentUser.getEmail())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -57,8 +64,12 @@ public class FirestoreDao {
     }
 
     public void bringFavouriteProducts(final ResultListener<List<Product>> controllerListener){
+        if(currentUser == null){
+            productContainer = new ProductContainer();
+            return;
+        }
         firebaseFirestore.collection(FAVOURITE_PRODUCT)
-                .document(currentUser.getUid())
+                .document(currentUser.getEmail())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

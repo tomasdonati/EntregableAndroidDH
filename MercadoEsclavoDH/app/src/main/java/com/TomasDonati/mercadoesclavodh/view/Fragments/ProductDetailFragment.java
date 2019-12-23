@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,8 +44,14 @@ public class ProductDetailFragment extends Fragment {
     private ProgressBar productImageProgressBar;
     private ToggleButton favouriteButton;
     private TextView productDescription;
+
+    private Product foundProduct;
+    private ProductController productController;
+
     private Boolean isFavourite;
-    private FirebaseAuth firebaseAuth;
+
+    private FirebaseUser currentUser;
+    private FirestoreController firestoreController;
 
 
     public ProductDetailFragment() {
@@ -60,37 +67,51 @@ public class ProductDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
         viewFinder(view);
 
-        Bundle bundle = getArguments();
-        final Product foundProduct = (Product) bundle.getSerializable(PRODUCT_DETAIL_KEY);
+        initializeComponents();
 
-        ProductController productController = new ProductController();
+        Bundle bundle = getArguments();
+        foundProduct = (Product) bundle.getSerializable(PRODUCT_DETAIL_KEY);
+
+        bringAndSetDescription();
+
+        setProductDetailView(foundProduct);
+
+        setFavButtonOnClick();
+
+        return view;
+
+    }
+
+    private void setFavButtonOnClick() {
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentUser == null){
+                    favouriteButton.setChecked(false);
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    firestoreController.addProductToFav(foundProduct);
+                    isFavourite = !isFavourite;
+                    updateFavButtonState();
+                }
+            }
+        });
+    }
+
+    private void bringAndSetDescription() {
         productController.bringProductDescription(foundProduct.getProductId(), new ResultListener<Description>() {
             @Override
             public void finish(Description result) {
                 productDescription.setText(result.getDescriptionText());
             }
         });
+    }
 
-
-        setProductDetailView(foundProduct);
-
-        final FirestoreController firestoreController = new FirestoreController();
-
-        favouriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(firebaseAuth.getInstance() == null){
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    firestoreController.addProductToFav(foundProduct);
-                    isFavourite = !isFavourite;
-                    updateUi();
-                }
-            }
-        });
-        return view;
-
+    private void initializeComponents() {
+        firestoreController = new FirestoreController();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        productController = new ProductController();
     }
 
     private void setProductDetailView(Product foundProduct) {
@@ -110,10 +131,9 @@ public class ProductDetailFragment extends Fragment {
             }
         })
                 .into(productImage);
-
     }
 
-    private void updateUi(){
+    private void updateFavButtonState(){
         if(isFavourite){
             favouriteButton.setChecked(true);
         } else{

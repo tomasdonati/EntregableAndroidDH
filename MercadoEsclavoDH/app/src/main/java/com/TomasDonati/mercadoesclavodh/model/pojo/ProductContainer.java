@@ -2,17 +2,20 @@ package com.TomasDonati.mercadoesclavodh.model.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProductContainer {
+public class ProductContainer implements Serializable {
 
     @SerializedName("results")
     private List<Product> productList;
 
     public ProductContainer() {
+        productList = new ArrayList<>();
     }
 
-    public ProductContainer(List<Product> productList){
+    public ProductContainer(List<Product> productList) {
         this.productList = productList;
     }
 
