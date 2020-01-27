@@ -49,9 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 createAccount(registerEmailEditText.getText().toString(), registerPasswordEditText.getText().toString());
             }
         });
-
-
-
     }
 
     @Override

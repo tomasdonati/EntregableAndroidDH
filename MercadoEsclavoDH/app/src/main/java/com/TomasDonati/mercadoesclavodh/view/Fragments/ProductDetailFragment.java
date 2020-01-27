@@ -31,6 +31,8 @@ import com.bumptech.glide.request.target.Target;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -78,6 +80,14 @@ public class ProductDetailFragment extends Fragment {
 
         setFavButtonOnClick();
 
+        firestoreController.bringFavouriteProducts(new ResultListener<List<Product>>() {
+            @Override
+            public void finish(List<Product> result) {
+                isFavourite = result.contains(foundProduct);
+                updateFavButtonState();
+            }
+        });
+
         return view;
 
     }
@@ -87,7 +97,6 @@ public class ProductDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(currentUser == null){
-                    favouriteButton.setChecked(false);
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
                 } else {

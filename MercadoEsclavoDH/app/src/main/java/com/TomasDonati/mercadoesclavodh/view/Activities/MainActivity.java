@@ -28,7 +28,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProductListFragment.FragmentListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements ProductListFragment.FragmentListener, NavigationView.OnNavigationItemSelectedListener, ProfileFragment.ProfileFragmentListener {
 
     private ProductListFragment productListFragment;
     private AboutUsFragment aboutUsFragment;
@@ -153,5 +153,14 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
         }
         drawerLayout.closeDrawers();
         return true;
+    }
+
+    @Override
+    public void recieveFavouriteProduct(Product product) {
+        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ProductDetailFragment.PRODUCT_DETAIL_KEY, product);
+        productDetailFragment.setArguments(bundle);
+        pasteFragment(productDetailFragment);
     }
 }

@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/alabaster"
     tools:context=".view.Fragments.ProfileFragment"
+    android:orientation="vertical"
     android:clickable="true">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="50sp"
-        android:text="Profile" />
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="30sp"
+        android:textColor="@color/darkPastelBlue"
+        android:fontFamily="sans-serif-black"
+        android:text="Perfil" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/profileFragment_textView_userEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        tools:text="Email"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:textColor="@color/darkPastelBlue"
+        tools:text="Favoritos:"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/profileFragment_recyclerView_favouriteList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

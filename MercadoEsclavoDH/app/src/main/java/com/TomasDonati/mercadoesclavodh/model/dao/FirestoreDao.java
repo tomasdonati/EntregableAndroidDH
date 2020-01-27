@@ -21,7 +21,7 @@ public class FirestoreDao {
     public static final String FAVOURITE_PRODUCT = "favouriteProduct";
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser currentUser;
-    private ProductContainer productContainer;
+    private ProductContainer productContainer = new ProductContainer();
 
     public FirestoreDao(){
         firebaseFirestore = FirebaseFirestore.getInstance();

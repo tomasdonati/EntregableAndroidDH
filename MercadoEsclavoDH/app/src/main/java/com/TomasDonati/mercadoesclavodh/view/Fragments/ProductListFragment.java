@@ -66,21 +66,6 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
         productListRecyclerView.setLayoutManager(linearLayoutManager);
         productListRecyclerView.setAdapter(productListAdapter);
 
-        productListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                Integer currentPosition = linearLayoutManager.findLastVisibleItemPosition();
-                Integer lastCell = linearLayoutManager.getItemCount();
-
-                if(currentPosition.equals(lastCell)){
-                    Toast.makeText(getContext(), "nuevapagina", Toast.LENGTH_SHORT).show();
-                    loadNewPage();
-                }
-            }
-        });
-
         //le asigno la callback al recycler
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(productListRecyclerView);
@@ -88,20 +73,6 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
         return view;
     }
 
-
-    private void loadNewPage(){
-        if(!firstSearch) {
-            if (productController.getAreThereMoreProducts()) {
-                productController.searchProductByTextInPages(searchQuery,  new ResultListener<ProductContainer>() {
-                    @Override
-                    public void finish(ProductContainer result) {
-                        productListAdapter.addProductList(result.getProductList());
-                    }
-                });
-            }
-        }
-
-    }
     //creo la callback para hacer el drag n drop...
     private ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
         @Override
@@ -121,7 +92,6 @@ public class ProductListFragment extends Fragment implements ProductListAdapter.
         }
     };
 
-    //metodo para que se ejecute el pedido del controller
     public void searchForProduct(String query){
         if(query.length() < 3){
             return;
