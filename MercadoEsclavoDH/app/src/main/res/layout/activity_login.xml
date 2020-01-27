@@ -48,6 +48,11 @@
         android:layout_marginBottom="30dp"
         android:text="Todavia no tiene una cuenta? Registrese abajo"/>
 
+    <EditText
+        android:id="@+id/loginActivity_editText_fullName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre Completo"/>
 
     <EditText
         android:id="@+id/loginActivity_editText_registerEmail"

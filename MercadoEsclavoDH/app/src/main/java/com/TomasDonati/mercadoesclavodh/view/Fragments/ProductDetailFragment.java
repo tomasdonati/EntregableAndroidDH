@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.TomasDonati.mercadoesclavodh.R;
@@ -102,7 +103,7 @@ public class ProductDetailFragment extends Fragment {
                 } else {
                     firestoreController.addProductToFav(foundProduct);
                     isFavourite = !isFavourite;
-                    updateFavButtonState();
+                    Toast.makeText(getContext(), "Agregado a favoritos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

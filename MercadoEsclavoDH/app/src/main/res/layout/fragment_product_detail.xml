@@ -78,7 +78,6 @@
                     android:layout_marginTop="19dp"
                     android:layout_marginRight="50dp"
                     android:background="@drawable/button_favourite"
-                    android:checked="false"
                     android:textOff=""
                     android:textOn="" />
 

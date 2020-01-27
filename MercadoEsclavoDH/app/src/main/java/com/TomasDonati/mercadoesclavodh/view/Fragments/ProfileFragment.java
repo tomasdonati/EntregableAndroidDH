@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,14 +21,18 @@ import android.widget.Toast;
 import com.TomasDonati.mercadoesclavodh.R;
 import com.TomasDonati.mercadoesclavodh.controller.FirestoreController;
 import com.TomasDonati.mercadoesclavodh.model.pojo.Product;
+import com.TomasDonati.mercadoesclavodh.model.pojo.User;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 import com.TomasDonati.mercadoesclavodh.view.Activities.LoginActivity;
 import com.TomasDonati.mercadoesclavodh.view.Adapters.ProductListAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,11 +42,21 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
 
     private RecyclerView favouriteProductRecycler;
     private TextView userEmailTextView;
+    private TextView userFullNameTextView;
     private LinearLayoutManager linearLayoutManager;
     private ProductListAdapter productListAdapter;
+    private Button logOutButton;
+    private Button logInButton;
 
+    private List<Product> productList = new ArrayList<>();
+
+    private FirebaseFirestore firestore;
+    private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
+
     private ProfileFragmentListener profileFragmentListener;
+
+    private static final String USERS_COLLECTION = "Users";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -56,23 +71,67 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
 
         viewFinder(view);
 
-        //a cambiar
-        userEmailTextView.setText("Bienvenido a su perfil!");
-
         linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         productListAdapter = new ProductListAdapter(new ArrayList<Product>(), this);
 
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        configureButtons();
 
         return view;
+    }
+
+    private void configureButtons() {
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth.signOut();
+                productListAdapter.setProductList(new ArrayList<Product>());
+                userEmailTextView.setText(null);
+                userFullNameTextView.setText(null);
+
+                Toast.makeText(getContext(), "Has cerrado la sesion", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        firestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+
+        controllerCall();
+
+        if(currentUser == null){
+            Toast.makeText(getContext(), "Aun no esta logueado", Toast.LENGTH_SHORT).show();
+        }else{
+            getLoggedInUser();
+        }
+    }
+
+    private void getLoggedInUser() {
+        firestore.collection(USERS_COLLECTION).document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                if(user != null){
+                    userEmailTextView.setText(user.getUserEmail());
+                    userFullNameTextView.setText(user.getUserFullName());
+                }
+            }
+        });
+    }
+
+    private void controllerCall() {
         final FirestoreController firestoreController = new FirestoreController();
         firestoreController.bringFavouriteProducts(new ResultListener<List<Product>>() {
             @Override
@@ -84,11 +143,34 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
                         @Override
                         public void finish(List<Product> result) {
                             productListAdapter.setProductList(result);
+                            productList = result;
                         }
                     });
 
                     favouriteProductRecycler.setLayoutManager(linearLayoutManager);
                     favouriteProductRecycler.setAdapter(productListAdapter);
+
+                    //drag n drop
+                    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+                        @Override
+                        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                            int fromPosition = viewHolder.getAdapterPosition();
+                            int toPosition = target.getAdapterPosition();
+
+                            Collections.swap(productList, fromPosition, toPosition);
+
+                            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+                            return false;
+                        }
+
+                        @Override
+                        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                        }
+                    };
+
+                    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+                    itemTouchHelper.attachToRecyclerView(favouriteProductRecycler);
                 }
             }
         });
@@ -97,6 +179,9 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
     private void viewFinder(View view){
         favouriteProductRecycler = view.findViewById(R.id.profileFragment_recyclerView_favouriteList);
         userEmailTextView = view.findViewById(R.id.profileFragment_textView_userEmail);
+        logOutButton = view.findViewById(R.id.profileFragment_button_logOutButton);
+        logInButton = view.findViewById(R.id.profileFragment_button_logInButton);
+        userFullNameTextView = view.findViewById(R.id.profileFragment_textView_userFullName);
     }
 
     @Override
