@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity implements ProductListFragme
             case R.id.navigationViewMenu_item_profile:
                 pasteFragment(profileFragment);
                 break;
+            case R.id.navigationViewMenu_item_home:
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
         }
         drawerLayout.closeDrawers();
         return true;

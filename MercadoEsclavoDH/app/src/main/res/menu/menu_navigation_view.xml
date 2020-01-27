@@ -7,5 +7,8 @@
     <item android:id="@+id/navigationViewMenu_item_profile"
         android:title="Perfil"
         android:icon="@drawable/ic_profile_black"/>
+    <item android:id="@+id/navigationViewMenu_item_home"
+        android:title="Home"
+        android:icon="@drawable/ic_home"/>
 
 </menu>
