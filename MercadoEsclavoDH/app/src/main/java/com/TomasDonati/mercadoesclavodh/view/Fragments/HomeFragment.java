@@ -21,7 +21,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+//que fragment mas al pedo este
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
