@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class FirestoreDao {
 
-    public static final String FAVOURITE_PRODUCT = "favouriteProduct";
+    public static final String FAVOURITE_PRODUCT = "favouriteProducts";
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser currentUser;
     private ProductContainer productContainer = new ProductContainer();

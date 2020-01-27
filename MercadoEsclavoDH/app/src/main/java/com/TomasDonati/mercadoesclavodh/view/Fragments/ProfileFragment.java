@@ -25,9 +25,12 @@ import com.TomasDonati.mercadoesclavodh.model.pojo.User;
 import com.TomasDonati.mercadoesclavodh.utils.ResultListener;
 import com.TomasDonati.mercadoesclavodh.view.Activities.LoginActivity;
 import com.TomasDonati.mercadoesclavodh.view.Adapters.ProductListAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -50,13 +53,15 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
 
     private List<Product> productList = new ArrayList<>();
 
+    private User newUser;
+
     private FirebaseFirestore firestore;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
 
     private ProfileFragmentListener profileFragmentListener;
 
-    private static final String USERS_COLLECTION = "Users";
+    private static final String USERS_COLLECTION = "users";
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -119,16 +124,25 @@ public class ProfileFragment extends Fragment implements ProductListAdapter.Prod
     }
 
     private void getLoggedInUser() {
-        firestore.collection(USERS_COLLECTION).document(currentUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        DocumentReference userInfo = firestore.collection(USERS_COLLECTION).document(currentUser.getUid());
+        userInfo.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                if(user != null){
-                    userEmailTextView.setText(user.getUserEmail());
-                    userFullNameTextView.setText(user.getUserFullName());
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot.exists()) {
+                        newUser = documentSnapshot.toObject(User.class);
+                        userFullNameTextView.setText("Nombre: " + newUser.getUserFullName());
+                        userEmailTextView.setText("Email: " + newUser.getUserEmail());
+
+                    }else{
+                        Toast.makeText(getContext(), "Aun no esta logueado", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
+
     }
 
     private void controllerCall() {

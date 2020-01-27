@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="5dp"
         android:background="@color/darkPastelBlue"
         android:text="Cerrar Sesion"/>
@@ -63,7 +63,7 @@
         android:layout_marginLeft="20dp"
         android:textSize="20sp"
         android:textColor="@color/darkPastelBlue"
-        android:text="Favoritos:"/>
+        android:text="Productos Favoritos:"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profileFragment_recyclerView_favouriteList"
         android:layout_width="match_parent"

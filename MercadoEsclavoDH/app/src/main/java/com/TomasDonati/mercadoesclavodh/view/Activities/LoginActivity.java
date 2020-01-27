@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
-    private static final String USERS_COLLECTION = "Users";
+    private static final String USERS_COLLECTION = "users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         if(validEmail(email) && validPassword(password)){
 
             String userFullName = registerFullNameEditText.getText().toString();
-            String userEmail = loginEmailEditText.getText().toString();
+            String userEmail = registerEmailEditText.getText().toString();
             firebaseFirestore = FirebaseFirestore.getInstance();
             final User newUser = new User(userEmail, userFullName);
 
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         registerFullNameEditText.setText(null);
                         Toast.makeText(LoginActivity.this, "Usuario creado", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        firebaseFirestore.collection(USERS_COLLECTION).document(user.getEmail()).set(newUser);
+                        firebaseFirestore.collection(USERS_COLLECTION).document(user.getUid()).set(newUser);
                     }else{
                         Log.w(TAG, "createUserWithEmailAndPassword:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
